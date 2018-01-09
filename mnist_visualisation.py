@@ -95,8 +95,8 @@ class GradientImage(object):
         scipy.misc.imsave(filename, '.png', image)
 
     def load_models(self):
-        checkpoint_dcgan = tf.train.latest_checkpoint(self.FLAGS.checkpoint_dcgan_dir)
-        checkpoint = tf.train.latest_checkpoint(self.FLAGS.checkpoint_dir)
+        checkpoint_dcgan = tf.train.latest_checkpoint(self.FLAGS.dcgan_checkpoint_dir)
+        checkpoint = tf.train.latest_checkpoint(self.FLAGS.simple_checkpoint_dir)
         self.adv_graph = tf.Graph()
         self.model_graph = tf.Graph()
         config = tf.ConfigProto(allow_soft_placement=True, log_device_placement=False)
