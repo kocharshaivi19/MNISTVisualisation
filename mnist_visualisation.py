@@ -190,7 +190,7 @@ class GradientImage(object):
         for from_label, index in enumerate(idx):
             x_start = self.dataset.test.images[index]
             x_start = np.reshape(x_start, [1, 784])
-            for des in digit_list[:from_label] + digit_list[from_label:]:
+            for des in digit_list[:from_label] + digit_list[from_label+1:]:
                 y_desired = np.zeros((1, 10), dtype=np.float32)
                 y_desired[0, des] = 1
                 print("Transformtion From Label {0} to Desired Label {1}".format(from_label, des))
