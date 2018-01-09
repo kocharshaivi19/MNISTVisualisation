@@ -12,7 +12,7 @@ tf.logging.set_verbosity(tf.logging.INFO)
 
 class MNISTdcgan():
     def __init__(self, dataset,
-                 batch_size=32,
+                 batch_size=16,
                  FLAGS=None):
         self.dataset = dataset
         self.batch_size = batch_size
