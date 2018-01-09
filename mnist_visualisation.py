@@ -170,13 +170,14 @@ class GradientImage(object):
             os.makedirs(savedir)
 
         for ep in epoch_list:
-            for to_i in lt:
-                if to_i == from_label:
-                    continue
-                else:
-                    img = scipy.misc.imread(os.path.join(path, "testing_" + str(from_label) + "_" + str(to_i), str(ep) + ".png"))
-                    frame[from_label * self.image_size: from_label * self.image_size + self.image_size,
-                            to_i * self.image_size: to_i * self.image_size + self.image_size] = img
+            for fr in lt:
+                for to_i in lt:
+                    if to_i == from_label and fr == from_label:
+                        continue
+                    else:
+                        img = scipy.misc.imread(os.path.join(path, "testing_" + str(from_label) + "_" + str(to_i), str(ep) + ".png"))
+                        frame[fr * self.image_size: fr * self.image_size + self.image_size,
+                                to_i * self.image_size: to_i * self.image_size + self.image_size] = img
             scipy.misc.imsave(os.path.join(savedir, str(ep) + '.png'), frame)
 
     def visualization(self, random=False):
