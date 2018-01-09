@@ -49,11 +49,6 @@ if __name__ == '__main__':
 
     dataset = input_data.read_data_sets(FLAGS.datadir, one_hot=True)
 
-    if not tf.gfile.Exists(FLAGS.simple_checkpoint_dir) and \
-            not tf.gfile.Exists(FLAGS.dcgan_checkpoint_dir):
-        tf.gfile.MakeDirs(FLAGS.simple_checkpoint_dir)
-        tf.gfile.MakeDirs(FLAGS.dcgan_checkpoint_dir)
-
     if FLAGS.vis_savedir and not tf.gfile.Exists(FLAGS.vis_savedir):
         tf.gfile.MakeDirs(FLAGS.vis_savedir)
 

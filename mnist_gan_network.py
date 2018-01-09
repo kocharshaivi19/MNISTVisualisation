@@ -147,6 +147,9 @@ class MNISTdcgan():
                 sess.run(init)
 
                 # Savers
+                if not tf.gfile.Exists(self.FLAGS.dcgan_checkpoint_dir):
+                    tf.gfile.MakeDirs(self.FLAGS.dcgan_checkpoint_dir)
+
                 saver = tf.train.Saver(max_to_keep=20)
                 checkpoint = tf.train.latest_checkpoint(self.FLAGS.dcgan_checkpoint_dir)
                 if checkpoint and not self.FLAGS.debug:
