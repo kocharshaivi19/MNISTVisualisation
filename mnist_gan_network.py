@@ -25,12 +25,14 @@ class MNISTdcgan():
         :param size: size of the patch in final image
         :return: patched image
         '''
+        print ("image", images.shape)
         h, w = images.shape[1], images.shape[2]
         img = np.zeros((h * size[0], w * size[1]))
 
         for idx, image in enumerate(images):
             i = idx % size[1]
             j = idx / size[1]
+            print ("i : {0}, j : {1}".format(i, j))
             img[j * h:j * h + h, i * w:i * w + w] = image
         return img
 
@@ -192,7 +194,7 @@ class MNISTdcgan():
                             scipy.misc.imsave(self.FLAGS.dcgan_savedir + '/sample'+str(step)+'.png',
                                               self.merge(images, [int(math.sqrt(samples))] * 2))
 
-                        # save model
+                            # save model
                             checkpoint_file = os.path.join(self.FLAGS.dcgan_checkpoint_dir, 'checkpoint')
                             saver.save(sess, checkpoint_file, global_step=global_step)
                 return
