@@ -202,7 +202,7 @@ class GradientImage(object):
                 self.gradientMorphing(x_start, y_desired,
                                       sub_dir_name=os.path.join(self.FLAGS.vis_savedir,
                                                     'testing_' + str(from_label) + '_' + str(des)))
-            self.createGridView(path=self.FLAGS.vis_savedir, from_label=from_label)
+            # self.createGridView(path=self.FLAGS.vis_savedir, from_label=from_label)
 
         if random:
             # generated images using random input vector
