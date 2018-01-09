@@ -21,7 +21,6 @@ http://tensorflow.org/tutorials/mnist/beginners/index.md
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
-import matplotlib.pyplot as plt
 from scipy.ndimage.filters import gaussian_filter
 import os
 import scipy
@@ -88,12 +87,12 @@ class GradientImage(object):
         :return:
         '''
         image = np.clip(np.reshape(image, (self.image_size, self.image_size)) * 255, 0, 255)
-        plt.title("image")
-        im = plt.imshow(image)
-        cb = plt.colorbar(im)
-        plt.draw()
-        plt.pause(pause)
-        cb.remove()
+        # plt.title("image")
+        # im = plt.imshow(image)
+        # cb = plt.colorbar(im)
+        # plt.draw()
+        # plt.pause(pause)
+        # cb.remove()
         scipy.misc.imsave(filename, '.png', image)
 
     def load_models(self):
