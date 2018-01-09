@@ -27,7 +27,6 @@ import scipy
 import pdb
 import numpy as np
 import tensorflow as tf
-import cv2
 
 class GradientImage(object):
     def __init__(self, dataset, image_size, FLAGS=None,
