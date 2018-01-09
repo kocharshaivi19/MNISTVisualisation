@@ -86,13 +86,14 @@ class GradientImage(object):
         :return:
         '''
         image = np.clip(np.reshape(image, (self.image_size, self.image_size)) * 255, 0, 255)
+        print (image.shape)
         # plt.title("image")
         # im = plt.imshow(image)
         # cb = plt.colorbar(im)
         # plt.draw()
         # plt.pause(pause)
         # cb.remove()
-        scipy.misc.imsave(filename, '.png', image)
+        scipy.misc.imsave(filename + '.png', image)
 
     def load_models(self):
         checkpoint_dcgan = tf.train.latest_checkpoint(self.FLAGS.dcgan_checkpoint_dir)
