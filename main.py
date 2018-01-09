@@ -55,12 +55,12 @@ if __name__ == '__main__':
     if not tf.gfile.Exists(FLAGS.simple_checkpoint_dir) and not tf.gfile.Exists(FLAGS.dcgan_checkpoint_dir):
         print ("Preparing Training...")
         # Train Simple MNIST model
-        snet = MNISTsimple(dataset=dataset)
+        snet = MNISTsimple(dataset=dataset, FLAGS=FLAGS)
         snet.trainImageNet()
         print ("Simple Model Training done!")
 
         # Train DCGAN MNIST model
-        dnet = MNISTdcgan(dataset=dataset)
+        dnet = MNISTdcgan(dataset=dataset, FLAGS=FLAGS)
         dnet.mnist_gan()
         print ("DCGAN Model Training done!")
 
