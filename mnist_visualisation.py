@@ -174,10 +174,9 @@ class GradientImage(object):
                 for to_i in lt:
                     print ("fr: {0}, to: {0}".format(fr, to_i))
                     if to_i == from_label and fr == from_label:
-                        continue
-                    else:
-                        img = scipy.misc.imread(os.path.join(path, "testing_" + str(from_label) + "_" + str(to_i), str(ep) + ".png"))
-                        frame[fr * self.image_size: fr * self.image_size + self.image_size,
+                        pass
+                    img = scipy.misc.imread(os.path.join(path, "testing_" + str(from_label) + "_" + str(to_i), str(ep) + ".png"))
+                    frame[fr * self.image_size: fr * self.image_size + self.image_size,
                                 to_i * self.image_size: to_i * self.image_size + self.image_size] = img
             scipy.misc.imsave(os.path.join(savedir, str(ep) + '.png'), frame)
 
