@@ -161,7 +161,7 @@ class MNISTdcgan():
                 # Training loop
                 for step in range(int(1e6)):
                     z_batch = np.random.uniform(-1, 1, [self.batch_size, z_dim]).astype(np.float32)
-                    images = self.dataset.train.next_batch(self.batch_size)[0]
+                    images, labels = self.dataset.train.next_batch(self.batch_size)
 
                     # Update discriminator
                     _, d_loss_val = sess.run([d_trainer, d_loss], feed_dict={x: images, z: z_batch})

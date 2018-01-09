@@ -86,8 +86,6 @@ class MNISTsimple():
             with tf.device("/gpu:0"):
                 # Initialize variables
                 sess.run(init)
-                if not tf.gfile.Exists(self.FLAGS.simple_checkpoint_dir):
-                    tf.gfile.MakeDirs(self.FLAGS.simple_checkpoint_dir)
 
                 if os.path.isdir(self.FLAGS.simple_checkpoint_dir):
                     print ("Model already exists ...")
@@ -109,6 +107,8 @@ class MNISTsimple():
                     # save checkpoint_v1 of the model
                     print("{} Saving checkpoint_v1 of model...".format(step))
                     # check if the folder is present or not to save the model checkpoint_v1
+                    if not tf.gfile.Exists(self.FLAGS.simple_checkpoint_dir):
+                        tf.gfile.MakeDirs(self.FLAGS.simple_checkpoint_dir)
 
                     checkpoint_name = os.path.join(self.FLAGS.simple_checkpoint_dir, 'imagenet_model.ckpt')
                     saver.save(sess, checkpoint_name, global_step=step)
