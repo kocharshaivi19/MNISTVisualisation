@@ -161,7 +161,7 @@ class GradientImage(object):
                 self.write_img_display(x_start[0], filename=os.path.join(sub_dir_name, str(num_file)))
                 num_file += 1
 
-    def createGridView(self, path):
+    def createGridView(self, path, from_label):
         frame = np.array([10 * self.image_size, 10 * self.image_size], dtype=np.float32)
         lt = [i for i in range(0, 10)]
         epoch_list = [0, 100, 200, 300]
@@ -170,11 +170,12 @@ class GradientImage(object):
             os.makedirs(savedir)
 
         for ep in epoch_list:
-            for from_i in lt:
-                for to_i in lt:
-                    img = scipy.misc.imread(os.path.join(path, "testing_" + str(from_i) + "_" + str(to_i), str(ep) + ".png"))
-                    frame[from_i * self.image_size: from_i * self.image_size + self.image_size,
-                            to_i * self.image_size: to_i * self.image_size + self.image_size] = img
+            for to_i in lt:
+                if to_i == from_label:
+                    pass
+                img = scipy.misc.imread(os.path.join(path, "testing_" + str(from_label) + "_" + str(to_i), str(ep) + ".png"))
+                frame[from_label * self.image_size: from_label * self.image_size + self.image_size,
+                        to_i * self.image_size: to_i * self.image_size + self.image_size] = img
             scipy.misc.imsave(os.path.join(savedir, str(ep) + '.png'), frame)
 
     def visualization(self, random=False):
@@ -199,7 +200,7 @@ class GradientImage(object):
                 self.gradientMorphing(x_start, y_desired,
                                       sub_dir_name=os.path.join(self.FLAGS.vis_savedir,
                                                     'testing_' + str(from_label) + '_' + str(des)))
-            self.createGridView(path=self.FLAGS.vis_savedir)
+            self.createGridView(path=self.FLAGS.vis_savedir, from_label=from_label)
 
         if random:
             # generated images using random input vector
