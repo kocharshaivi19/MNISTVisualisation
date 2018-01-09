@@ -153,6 +153,9 @@ class GradientImage(object):
             for reg in [self.clip_weak_pixel_regularization, self.blur_regularization]:
                 x_start = reg(x_start)
             if i % 100 == 0:
+                if not tf.gfile.Exists(os.path.join(sub_dir_name)):
+                    tf.gfile.MakeDirs(os.path.join(sub_dir_name))
+
                 self.write_img_display(x_start[0], filename=os.path.join(sub_dir_name, str(num_file)))
                 num_file += 1
 
@@ -167,9 +170,9 @@ class GradientImage(object):
         for ep in epoch_list:
             for from_i in lt:
                 for to_i in lt:
-                    img = cv2.imread(os.path.join(path, str(from_i) + "_" + str(to_i), str(ep) + ".png"))
-                    frame[from_i * self.image_size : from_i * self.image_size + self.image_size,
-                            to_i * self.image_size : to_i * self.image_size + self.image_size] = img
+                    img = scipy.misc.imread(os.path.join(path, str(from_i) + "_" + str(to_i), str(ep) + ".png"))
+                    frame[from_i * self.image_size: from_i * self.image_size + self.image_size,
+                            to_i * self.image_size: to_i * self.image_size + self.image_size] = img
             scipy.misc.imsave(os.path.join(savedir, str(ep) + '.png'), frame)
 
     def visualization(self, random=False):

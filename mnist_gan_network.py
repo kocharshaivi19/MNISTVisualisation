@@ -191,6 +191,9 @@ class MNISTdcgan():
                             images = sess.run(g_model, feed_dict={z: z2})
                             images = np.reshape(images, [samples, 28, 28])
                             images = (images + 1.) / 2.
+                            if not tf.gfile.Exists(self.FLAGS.dcgan_savedir):
+                                tf.gfile.MakeDirs(self.FLAGS.dcgan_savedir)
+
                             scipy.misc.imsave(self.FLAGS.dcgan_savedir + '/sample'+str(step)+'.png',
                                               self.merge(images, [int(math.sqrt(samples))] * 2))
 
