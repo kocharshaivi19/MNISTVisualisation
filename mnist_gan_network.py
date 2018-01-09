@@ -159,7 +159,7 @@ class MNISTdcgan():
                 summary_writer = tf.summary.FileWriter(self.FLAGS.dcgan_checkpoint_dir, sess.graph)
 
                 # Training loop
-                for step in range(2 if self.FLAGS.debug else int(1e6)):
+                for step in range(int(1e6)):
                     z_batch = np.random.uniform(-1, 1, [self.batch_size, z_dim]).astype(np.float32)
                     images = self.dataset.train.next_batch(self.batch_size)[0]
 
@@ -193,7 +193,6 @@ class MNISTdcgan():
                                               self.merge(images, [int(math.sqrt(samples))] * 2))
 
                         # save model
-                        if not self.FLAGS.debug:
                             checkpoint_file = os.path.join(self.FLAGS.dcgan_checkpoint_dir, 'checkpoint')
                             saver.save(sess, checkpoint_file, global_step=global_step)
                 return
