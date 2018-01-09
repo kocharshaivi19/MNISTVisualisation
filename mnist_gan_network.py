@@ -31,7 +31,7 @@ class MNISTdcgan():
         for idx, image in enumerate(images):
             i = idx % size[1]
             j = idx / size[1]
-            img[j * h:j * h + h, i * w:i * w + w, 1] = image
+            img[j * h:j * h + h, i * w:i * w + w] = image
         return img
 
     def lrelu(self, x, leak=0.2, name="lrelu"):
