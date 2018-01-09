@@ -3,6 +3,7 @@ from mnist_gan_network import *
 from mnist_simple import *
 from mnist_visualisation import *
 import os
+from tensorflow.examples.tutorials.mnist import input_data
 
 BASE_DIR = os.path.basename(os.path.basename(__file__))
 
@@ -20,7 +21,7 @@ if __name__ == '__main__':
                         help='The size of batch images [32]')
 
     parser.add_argument('--simple_checkpoint_dir', type=str,
-                        default=os.path.join(BASE_DIR, 'checkpoints'),
+                        default=os.path.join(BASE_DIR, 'simple_checkpoints'),
                         help='Directory to store Checkpoints for the model')
 
     parser.add_argument('--dcgan_checkpoint_dir', type=str,
@@ -32,7 +33,7 @@ if __name__ == '__main__':
                         help='Saving generated pictures')
 
     parser.add_argument('--dcgan_savedir', type=str,
-                        default=os.path.join(BASE_DIR, 'dcgan_checkpoints', 'sampledir'),
+                        default=os.path.join(BASE_DIR, 'dcgan_checkpoints', 'save_dcgan'),
                         help='Directory to save samples')
 
     parser.add_argument('--vis_savedir', type=str,
@@ -56,7 +57,7 @@ if __name__ == '__main__':
     if FLAGS.vis_savedir and not tf.gfile.Exists(FLAGS.vis_savedir):
         tf.gfile.MakeDirs(FLAGS.vis_savedir)
 
-    if not FLAGS.simple_checkpoint_dir and not FLAGS.dcgan_checkpoint_dir:
+    if not tf.gfile.Exists(FLAGS.simple_checkpoint_dir) and not tf.gfile.Exists(FLAGS.dcgan_checkpoint_dir):
         print ("Preparing Training...")
         # Train Simple MNIST model
         snet = MNISTsimple(dataset=dataset)

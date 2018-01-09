@@ -11,8 +11,11 @@ np.random.seed(1)
 tf.logging.set_verbosity(tf.logging.INFO)
 
 class MNISTdcgan():
-    def __init__(self, dataset, FLAGS=None):
+    def __init__(self, dataset,
+                 batch_size=32,
+                 FLAGS=None):
         self.dataset = dataset
+        self.batch_size = batch_size
         self.FLAGS = FLAGS
 
     def merge(self, images, size):
@@ -154,8 +157,8 @@ class MNISTdcgan():
 
                 # Training loop
                 for step in range(2 if self.FLAGS.debug else int(1e6)):
-                    z_batch = np.random.uniform(-1, 1, [self.FLAGS.batch_size, z_dim]).astype(np.float32)
-                    images = self.dataset.train.next_batch(self.FLAGS.batch_size)[0]
+                    z_batch = np.random.uniform(-1, 1, [self.batch_size, z_dim]).astype(np.float32)
+                    images = self.dataset.train.next_batch(self.batch_size)[0]
 
                     # Update discriminator
                     _, d_loss_val = sess.run([d_trainer, d_loss], feed_dict={x: images, z: z_batch})
