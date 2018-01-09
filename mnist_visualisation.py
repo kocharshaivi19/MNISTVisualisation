@@ -32,7 +32,7 @@ class GradientImage(object):
     def __init__(self, dataset, image_size, FLAGS=None,
                  weight_decay=0.05,
                  learningrate=0.0007,
-                 gaussian_Blur_span=0.3,
+                 gaussian_Blur_span=0.1,
                  batch_size=1,
                  percent=49):
         self.dataset = dataset
