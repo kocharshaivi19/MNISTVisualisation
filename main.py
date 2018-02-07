@@ -7,6 +7,28 @@ from tensorflow.examples.tutorials.mnist import input_data
 
 BASE_DIR = os.path.basename(os.path.basename(__file__))
 
+
+def createGridView(self, path, from_label):
+    frame = np.zeros([10 * self.image_size, 10 * self.image_size], dtype=np.float32)
+    lt = [i for i in range(0, 10)]
+    epoch_list = [0, 100, 200, 300]
+    savedir = os.path.join(path, "mnist_results")
+    if not os.path.exists(savedir):
+        os.makedirs(savedir)
+
+    for ep in epoch_list:
+        for fr in lt:
+            for to_i in lt:
+                print ("fr: {0}, to: {0}".format(fr, to_i))
+                if to_i == from_label and fr == from_label:
+                    pass
+                img = scipy.misc.imread(
+                    os.path.join(path, "testing_" + str(from_label) + "_" + str(to_i), str(ep) + ".png"))
+                frame[fr * self.image_size: fr * self.image_size + self.image_size,
+                to_i * self.image_size: to_i * self.image_size + self.image_size] = img
+        scipy.misc.imsave(os.path.join(savedir, str(ep) + '.png'), frame)
+
+
 if __name__ == '__main__':
     import argparse
     FLAGS = None

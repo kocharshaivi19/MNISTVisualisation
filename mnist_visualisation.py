@@ -119,7 +119,10 @@ class GradientImage(object):
                 self.softmax = tf.nn.softmax_cross_entropy_with_logits(labels=self.y, logits=self.y_conv)
                 print("softmax: ", self.softmax)
                 self.loss = tf.reduce_mean(self.softmax)
-                self.var_grad = tf.gradients(self.loss, [self.x])
+
+                yindexval = tf.where(tf.equal(self.y, 1))
+                print ("yindexval: ", yindexval)
+                self.var_grad = tf.gradients(self.softmax[yindexval], [self.x])
                 print(self.loss)
                 print(self.var_grad)
 
@@ -161,24 +164,27 @@ class GradientImage(object):
                 self.write_img_display(x_start[0], filename=os.path.join(sub_dir_name, str(num_file)))
                 num_file += 1
 
-    def createGridView(self, path, from_label):
+    def createGridView(self, path):
         frame = np.zeros([10 * self.image_size, 10 * self.image_size], dtype=np.float32)
         lt = [i for i in range(0, 10)]
-        epoch_list = [0, 100, 200, 300]
-        savedir = os.path.join(path, "mnist_results")
+        epoch_list = [0, 25, 49]
+        savedir = "/home/shaivi/Desktop/framesave/"
         if not os.path.exists(savedir):
             os.makedirs(savedir)
 
         for ep in epoch_list:
             for fr in lt:
                 for to_i in lt:
-                    print ("fr: {0}, to: {0}".format(fr, to_i))
-                    if to_i == from_label and fr == from_label:
+                    if to_i == fr:
                         pass
-                    img = scipy.misc.imread(os.path.join(path, "testing_" + str(from_label) + "_" + str(to_i), str(ep) + ".png"))
-                    frame[fr * self.image_size: fr * self.image_size + self.image_size,
-                                to_i * self.image_size: to_i * self.image_size + self.image_size] = img
-            scipy.misc.imsave(os.path.join(savedir, str(ep) + '.png'), frame)
+                    else:
+                        print("fr: {0}, to: {0}".format(fr, to_i))
+                        print("testing_" + str(fr) + "_" + str(to_i) + "/" + str(ep) + ".png")
+                        img = scipy.misc.imread(
+                            os.path.join(path, "testing_" + str(fr) + "_" + str(to_i), str(ep) + ".png"))
+                        frame[fr * self.image_size: fr * self.image_size + self.image_size,
+                        to_i * self.image_size: to_i * self.image_size + self.image_size] = img
+                scipy.misc.imsave(os.path.join(savedir, str(ep) + '.png'), frame)
 
     def visualization(self, random=False):
         digit_list = [i for i in range(0, 10)]
