@@ -119,11 +119,10 @@ class GradientImage(object):
                 self.softmax = tf.nn.softmax_cross_entropy_with_logits(labels=self.y, logits=self.y_conv)
                 print("softmax: ", self.softmax)
                 self.loss = tf.reduce_mean(self.softmax)
-
-                yindexval = tf.where(tf.equal(self.y, 1))
-                print ("yindexval: ", yindexval)
-                self.var_grad = tf.gradients(self.softmax[yindexval], [self.x])
                 print(self.loss)
+                self.yindexval = tf.where(tf.equal(self.y, 1))
+                output = tf.gather(self.softmax, self.yindexval)              
+                self.var_grad = tf.gradients(output, [self.x])                
                 print(self.var_grad)
 
         with self.adv_sess.as_default():
@@ -145,6 +144,8 @@ class GradientImage(object):
         num_file = 0
         for i in range(5000):
             with self.sess.as_default():
+                indexval = sess.run(self.yindexval, feed_dict={self.y: y_desired})
+                print ("yindexval: ", self.indexval)
                 l = self.sess.run(self.loss, feed_dict={self.x: x_start, self.y: y_desired, self.keep_prob: 1})
                 x_grad = self.sess.run(self.var_grad[0],
                                        feed_dict={self.x: x_start, self.y: y_desired, self.keep_prob: 1})
