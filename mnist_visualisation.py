@@ -145,9 +145,9 @@ class GradientImage(object):
         for i in range(5000):
             with self.sess.as_default():
                 indexval = self.sess.run(self.yindexval, feed_dict={self.y: y_desired})
-                print ("yindexval: ", self.indexval)
+                print ("yindexval: ", indexval)
                 out = self.sess.run(self.output, feed_dict={self.y: y_desired})
-                print ("out: ", self.out)
+                print ("out: ", out)
                 l = self.sess.run(self.loss, feed_dict={self.x: x_start, self.y: y_desired, self.keep_prob: 1})
                 x_grad = self.sess.run(self.var_grad[0],
                                        feed_dict={self.x: x_start, self.y: y_desired, self.keep_prob: 1})
