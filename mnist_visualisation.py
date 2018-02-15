@@ -120,9 +120,9 @@ class GradientImage(object):
                 print("softmax: ", self.softmax)
                 self.loss = tf.reduce_mean(self.softmax)
                 print(self.loss)
-                self.yindexval = tf.where(tf.equal(self.y, 1))
-                self.output = tf.gather(self.softmax, self.yindexval)              
-                self.var_grad = tf.gradients(self.output, [self.x])                
+                # self.yindexval = tf.where(tf.equal(self.y, 1))
+                # self.output = tf.gather(self.softmax, self.yindexval)              
+                self.var_grad = tf.gradients(self.softmax, [self.x])                
                 print(self.var_grad)
 
         with self.adv_sess.as_default():
@@ -144,21 +144,23 @@ class GradientImage(object):
         num_file = 0
         for i in range(5000):
             with self.sess.as_default():
-                print (y_desired)
-                y = self.sess.run(self.y, feed_dict={self.y: y_desired})
-                print ("y: ", y)
+                # print (y_desired)
+                # y = self.sess.run(self.y, feed_dict={self.y: y_desired})
+                # print ("y: ", y)
                 soft = self.sess.run(self.softmax, feed_dict={self.x: x_start, self.y: y_desired, self.keep_prob: 1})
                 print ("softmax: ", soft)
-                indexval = self.sess.run(self.yindexval, feed_dict={self.y: y_desired})
-                print ("yindexval: ", indexval)
-                out = self.sess.run(self.output, feed_dict={self.y: y_desired})
-                print ("out: ", out)
+                # indexval = self.sess.run(self.yindexval, feed_dict={self.y: y_desired})
+                # print ("yindexval: ", indexval)
+                # out = self.sess.run(self.output, feed_dict={self.y: y_desired})
+                # print ("out: ", out)
                 l = self.sess.run(self.loss, feed_dict={self.x: x_start, self.y: y_desired, self.keep_prob: 1})
                 x_grad = self.sess.run(self.var_grad[0],
                                        feed_dict={self.x: x_start, self.y: y_desired, self.keep_prob: 1})
+                print ("x_grad: ", x_grad)
             with self.adv_sess.as_default():
                 ldc = self.adv_sess.run(self.loss_dcgan, feed_dict={self.x_dcgan: x_start})
                 x_dcgan_grad = self.adv_sess.run(self.var_grad_dcgan[0], feed_dict={self.x_dcgan: x_start})
+                print ("x_dcgan_grad: ", x_dcgan_grad)
             print("count: {0}, l: {1}, ldcgan: {2}".format(i, l, ldc))
             x_start -= (np.add(x_grad[0], x_dcgan_grad[0]) * self.learningrate +
                         self.weight_decay * self.learningrate * x_start)
