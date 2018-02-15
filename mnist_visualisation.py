@@ -144,6 +144,9 @@ class GradientImage(object):
         num_file = 0
         for i in range(5000):
             with self.sess.as_default():
+            	print (y_desired)
+            	y = self.sess.run(self.y, feed_dict={self.y: y_desired})
+            	print ("y: ", y)
                 soft = self.sess.run(self.softmax, feed_dict={self.x: x_start, self.y: y_desired, self.keep_prob: 1})
                 print ("softmax: ", soft)
                 indexval = self.sess.run(self.yindexval, feed_dict={self.y: y_desired})
